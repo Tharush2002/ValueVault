@@ -1,0 +1,116 @@
+<div class="navbar bg-ghost py-3 md:py-6 md:w-11/12 w-auto mx-auto">
+    <div class="navbar-start">
+        <div class="flex space-x-2 md:space-x-8 justify-center items-center">
+            <div class="dropdown">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h7" />
+                    </svg>
+                </div>
+                <ul tabindex="0"
+                    class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                    <li routerLink=""><a>Homepage</a></li>
+                    <li><a>Portfolio</a></li>
+                    <li><a>About</a></li>
+                </ul>
+            </div>
+            <div class="sm:flex space-x-3 md:pl-4 scale-75 md:scale-100 items-center justify-center hidden">
+                <i class="bi bi-sun-fill text-slate-700 text-3xl"></i>
+                <input type="checkbox" class="toggle toggle-slate-800" />
+                <i class="bi bi-moon-fill  text-slate-700 text-xl"></i>
+            </div>
+        </div>
+    </div>
+    <div class="navbar-center">
+        <a routerLink=""
+            class="text-base md:text-xl lg:text-2xl font-bold font-mono text-gray-600 hover:cursor-pointer hover:scale-105 duration-500 hover:text-gray-700">ValueVault</a>
+    </div>
+    <div class="navbar-end">
+        <div class="absolute justify-between mr-24 xl:mr-32 hidden lg:flex">
+            <div class="form-control">
+                <input type="text" placeholder="Search Products" [(ngModel)]="searchTerm" class="input pr-10 input-bordered w-18 h-10" />
+            </div>
+            <div class="relative top-2 right-10" routerLink="/search-products" (click)="saveSearchTerm()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    class=" w-6 hover:cursor-pointer hover:scale-105 opacity-80 hover:opacity-100 duration-100">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" class="opacity-50" />
+                </svg>
+            </div>
+        </div>
+        <div class="flex space-x-4">
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+                    <div class="indicator">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        <span class="badge badge-sm indicator-item bg-danger">8</span>
+                    </div>
+                </div>
+                <div tabindex="0" class="card card-compact dropdown-content bg-base-100 z-[1] mt-3 w-52 shadow">
+                    <div class="card-body">
+                        <span class="text-lg font-bold">8 Items</span>
+                        <span class="text-info">Subtotal: $999</span>
+                        <div class="card-actions">
+                            <button class="btn btn-primary btn-block">View cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                    <div class="w-10 rounded-full">
+                        <img alt="Tailwind CSS Navbar component"
+                            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                    </div>
+                </div>
+                <ul tabindex="0"
+                    class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                    <li>
+                        <a class="justify-between">
+                            Profile
+                            <span class="badge badge-primary">New</span>
+                        </a>
+                    </li>
+                    <li routerLink="/sign-up"><a>Sign Up</a></li>
+                    <li routerLink="/log-in"><a>Log In</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="grid grid-cols-2 sm:grid-cols-1 w-screen overflow-x-hidden px-4 pb-6 lg:hidden">
+
+    <div class="container p-2 block sm:hidden">
+        <div class="flex space-x-3 items-center">
+            <i class="bi bi-sun-fill text-slate-700 text-xl"></i>
+            <input type="checkbox" class="toggle toggle-sm toggle-slate-800" aria-label="Toggle Theme" />
+            <i class="bi bi-moon-fill text-slate-700 text-lg"></i>
+        </div>
+    </div>
+
+    <div class="flex items-center">
+        <div class="flex flex-auto my-auto justify-center items-center mb-3 w-full">
+            <div class="form-control w-11/12">
+                <input type="text" placeholder="Search" [(ngModel)]="searchTerm" class="input pr-10 input-bordered w-full h-10" />
+            </div>
+            <div (click)="saveSearchTerm()" routerLink="/search-products">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" class="relative top-0 right-8 w-6" onclick=setSearchItem()>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" class="opacity-50" />
+            </svg>
+            </div>
+            
+        </div>
+    </div>
+
+</div>

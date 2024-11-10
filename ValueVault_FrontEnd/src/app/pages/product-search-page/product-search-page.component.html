@@ -1,0 +1,8 @@
+<div class="min-h-screen h-full w-screen">
+    <div class="hidden md:block fixed w-screen z-10 top-0 bg-gradient-to-bl from-white to-slate-200">
+        <app-header (search)="onSearchTermReceived($event)"></app-header>
+    </div>
+    <div class="absolute w-screen z-0 lg:top-[95px] md:top-[170px] bg-gradient-to-bl from-slate-100 to-white">
+        <app-product-search [searchTerm]="searchTerm"></app-product-search>
+    </div>
+</div>

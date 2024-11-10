@@ -1,0 +1,11 @@
+{
+    "/api": {
+      "target": "https://data.unwrangle.com/api",
+      "secure": true,
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/api": ""
+      },
+      "logLevel": "debug"
+    }
+  }

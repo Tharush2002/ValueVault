@@ -1,0 +1,23 @@
+.call-to-action-1-image{
+    background-image: url('../../../assets/images/banners/b17.jpg');
+}
+
+.call-to-action-2-image{
+    background-image: url('../../../assets/images/banners/b10.jpg');
+}
+
+.call-to-action-3-image{
+    background-image: url('../../../assets/images/banners/b4.jpg');
+}
+
+.call-to-action-4-image{
+    background-image: url('../../../assets/images/banners/b16.jpg');
+}
+
+.image-container{
+    backdrop-filter: blur(30px);
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-size: cover;
+    height: 50vh;
+}
