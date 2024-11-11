@@ -1,13 +1,17 @@
-import { Component, Inject } from '@angular/core';
-// import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { NgIf } from '@angular/common';
+import { Component, Inject, Input, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-product-view',
   standalone: true,
-  imports: [],
+  imports: [NgIf],
   templateUrl: './product-view.component.html',
   styleUrl: './product-view.component.css'
 })
 export class ProductViewComponent {
-  // constructor(@Inject(MAT_DIALOG_DATA) public product: any) { }
+  @Input() product: any = null;
+
+  getProductName(): string {
+    return this.product.name.split(/[,|]/)[0];
+  }
 }

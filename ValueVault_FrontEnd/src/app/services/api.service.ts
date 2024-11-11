@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private apiKey: string = 'a5d776dd9fa71c3ee90dd56450725441266201ed';
+  private apiKey: string = '4749232912f1d64e71f0d95676921de18096b99c';
 
   constructor(private http: HttpClient) {}
 

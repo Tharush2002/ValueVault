@@ -1,7 +1,7 @@
 <div class="drawer md:drawer-open md:h-[87vh] overflow-hidden">
     <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content flex flex-col items-center w-full h-screen">
-        <!-- Page content here -->
+
         <div class="w-screen md:hidden">
             <app-header></app-header>
         </div>
@@ -13,8 +13,8 @@
 
         <div class="px-6 my-6 w-11/12 md:h-4/5 overflow-scroll">
             <div class="flex items-center flex-wrap justify-center sm:space-x-4 space-y-4">
-                <section class="bg-gray-50 antialiased dark:bg-gray-900 py-0">
-                    <div class="mx-auto max-w-screen-xl px-4 2xl:px-0" *ngIf="!loading">
+                <section class="bg-gray-50 py-4 px-8 antialiased dark:bg-gray-900 w-full rounded-lg">
+                    <div class="mx-auto w-full px-4 2xl:px-0" *ngIf="!loading">
 
                         <div class="mb-4 items-end justify-between space-y-4 sm:flex sm:space-y-0 md:mb-8">
                             <div>
@@ -46,15 +46,18 @@
                         </div>
 
                         <div class="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
-                            <div *ngFor="let product of productInfo" class="col" >
+                            <div *ngFor="let product of productInfo" class="col">
                                 <app-product [product]="product"></app-product>
                             </div>
                         </div>
 
-                        <div class="w-full text-center">
-                            <button type="button"
-                                class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">Show
-                                more</button>
+                        <div class="w-full text-center flex items-start">
+                            <div class="join">
+                                <button class="join-item btn btn-active">1</button>
+                                <button class="join-item btn">2</button>
+                                <button class="join-item btn">3</button>
+                                <button class="join-item btn">4</button>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -63,16 +66,12 @@
                 <app-loader></app-loader>
             </div>
         </div>
-
-
-
-
     </div>
     <div class="drawer-side my-4 absolute z-20">
         <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
         <ul
             class="menu bg-white border border-slate-300 md:m-3 md:h-[80vh] h-screen md:rounded-xl md:shadow-xl text-base-content w-[75vw] sm:w-[35vw] lg:w-72 p-4">
-            <!-- Sidebar content here -->
+
             <li><a>Sidebar Item 1</a></li>
             <li><a>Sidebar Item 2</a></li>
             <div class="flex flex-col space-y-4 items-center justify-center w-full p-8">
