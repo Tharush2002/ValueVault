@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ProductViewComponent } from '../product-view/product-view.component';
 import { CommonModule } from '@angular/common';
 
@@ -41,4 +41,7 @@ export class ProductComponent {
     return this.product.name.split(/[,|]/)[0];
   }
 
+  handleAddToCart(){
+    this.closeModal();
+  }
 }

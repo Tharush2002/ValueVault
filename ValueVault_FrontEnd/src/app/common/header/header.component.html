@@ -1,4 +1,4 @@
-<div class="navbar bg-ghost py-3 md:py-6 md:w-11/12 w-auto mx-auto">
+<div class="navbar bg-ghost py-3 md:py-6 md:w-11/12 w-auto mx-auto relative z-40">
     <div class="navbar-start">
         <div class="flex space-x-2 md:space-x-8 justify-center items-center">
             <div class="dropdown">
@@ -18,7 +18,12 @@
             </div>
             <div class="sm:flex space-x-3 md:pl-4 scale-75 md:scale-100 items-center justify-center hidden">
                 <i class="bi bi-sun-fill text-slate-700 text-3xl"></i>
-                <input type="checkbox" class="toggle toggle-slate-800" />
+                <label
+                    class="relative inline-block h-8 w-14 cursor-pointer rounded-full bg-white border border-black/50 transition [-webkit-tap-highlight-color:_transparent] has-[:checked]:bg-gray-800/75">
+                    <input class="peer sr-only" id="AcceptConditions" type="checkbox" />
+                    <span
+                        class="absolute inset-y-0 start-0 m-1 size-6 rounded-full bg-gray-400 ring-[1px] ring-inset ring-white transition-all peer-checked:start-8 peer-checked:w-2 peer-checked:bg-slate-200 peer-checked:ring-transparent"></span>
+                </label>
                 <i class="bi bi-moon-fill  text-slate-700 text-xl"></i>
             </div>
         </div>
@@ -30,9 +35,10 @@
     <div class="navbar-end">
         <div class="absolute justify-between mr-24 xl:mr-32 hidden lg:flex">
             <div class="form-control">
-                <input type="text" placeholder="Search Products" [(ngModel)]="searchTerm" class="input pr-10 input-bordered w-18 h-10" />
+                <input type="text" placeholder="Search Products" [(ngModel)]="searchTerm"
+                    class="input pr-10 input-bordered w-18 h-10" (keyup.enter)="triggerSearch()"/>
             </div>
-            <div class="relative top-2 right-10" routerLink="/search-products" (click)="saveSearchTerm()">
+            <div class="relative top-2 right-10" (click)="triggerSearch()">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor"
                     class=" w-6 hover:cursor-pointer hover:scale-105 opacity-80 hover:opacity-100 duration-100">
@@ -50,13 +56,13 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
-                        <span class="badge badge-sm indicator-item bg-danger">8</span>
+                        <span class="badge badge-sm indicator-item bg-danger">{{itemCount}}</span>
                     </div>
                 </div>
                 <div tabindex="0" class="card card-compact dropdown-content bg-base-100 z-[1] mt-3 w-52 shadow">
                     <div class="card-body">
-                        <span class="text-lg font-bold">8 Items</span>
-                        <span class="text-info">Subtotal: $999</span>
+                        <span class="text-lg font-bold">{{itemCount}} Items</span>
+                        <span class="text-info">Subtotal: ${{totalPrice | number:'1.2-2'}}</span>
                         <div class="card-actions">
                             <button class="btn btn-primary btn-block">View cart</button>
                         </div>
@@ -92,24 +98,30 @@
     <div class="container p-2 block sm:hidden">
         <div class="flex space-x-3 items-center">
             <i class="bi bi-sun-fill text-slate-700 text-xl"></i>
-            <input type="checkbox" class="toggle toggle-sm toggle-slate-800" aria-label="Toggle Theme" />
+            <label
+                class="relative inline-block h-8 w-14 cursor-pointer rounded-full bg-white border border-black/50 transition [-webkit-tap-highlight-color:_transparent] has-[:checked]:bg-gray-800/75">
+                <input class="peer sr-only" id="AcceptConditions" type="checkbox" />
+                <span
+                    class="absolute inset-y-0 start-0 m-1 size-6 rounded-full bg-gray-400 ring-[1px] ring-inset ring-white transition-all peer-checked:start-8 peer-checked:w-2 peer-checked:bg-slate-200 peer-checked:ring-transparent"></span>
+            </label>
             <i class="bi bi-moon-fill text-slate-700 text-lg"></i>
         </div>
     </div>
 
     <div class="flex items-center">
-        <div class="flex flex-auto my-auto justify-center items-center mb-3 w-full">
+        <div class="flex flex-auto my-auto justify-center items-center sm:mb-3 w-full">
             <div class="form-control w-11/12">
-                <input type="text" placeholder="Search" [(ngModel)]="searchTerm" class="input pr-10 input-bordered w-full h-10" />
+                <input type="text" placeholder="Search" [(ngModel)]="searchTerm"
+                    class="input pr-10 input-bordered w-full h-10" (keyup.enter)="triggerSearch()"/>
             </div>
-            <div (click)="saveSearchTerm()" routerLink="/search-products">
+            <div (click)="triggerSearch()">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor" class="relative top-0 right-8 w-6" onclick=setSearchItem()>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" class="opacity-50" />
-            </svg>
+                    stroke="currentColor" class="relative top-0 right-8 w-6" onclick=setSearchItem()>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" class="opacity-50" />
+                </svg>
             </div>
-            
+
         </div>
     </div>
 

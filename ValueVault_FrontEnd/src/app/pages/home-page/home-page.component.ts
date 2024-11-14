@@ -7,6 +7,7 @@ import { FooterComponent } from "../../common/footer/footer.component";
 import { DiscountBanner1Component } from "../../common/discount-banner-1/discount-banner-1.component";
 import { NewsletterComponent } from "../../common/newsletter/newsletter.component";
 import { CallToActionBannersComponent } from "../../common/call-to-action-banners/call-to-action-banners.component";
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-home-page',
@@ -16,5 +17,7 @@ import { CallToActionBannersComponent } from "../../common/call-to-action-banner
   styleUrl: './home-page.component.css'
 })
 export class HomePageComponent {
-
+  ngOnInit(): void {
+    initFlowbite();
+  }
 }

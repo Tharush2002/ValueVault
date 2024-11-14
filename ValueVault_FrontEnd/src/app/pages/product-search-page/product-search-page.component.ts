@@ -14,9 +14,6 @@ export class ProductSearchPageComponent {
   searchTerm: string = '';
 
   onSearchTermReceived(searchTerm: string): void {
-    console.log(searchTerm);
-    
     this.searchTerm = searchTerm;
-    console.log('Received search term in ProductSearchPageComponent:', this.searchTerm);
   }
 }
