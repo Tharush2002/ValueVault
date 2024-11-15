@@ -20,7 +20,7 @@
                 <i class="bi bi-sun-fill text-slate-700 text-3xl"></i>
                 <label
                     class="relative inline-block h-8 w-14 cursor-pointer rounded-full bg-white border border-black/50 transition [-webkit-tap-highlight-color:_transparent] has-[:checked]:bg-gray-800/75">
-                    <input class="peer sr-only" id="AcceptConditions" type="checkbox" />
+                    <input class="peer sr-only" id="AcceptConditions" type="checkbox" [(ngModel)]="isDarkMode" (change)="toggleDarkMode()"/>
                     <span
                         class="absolute inset-y-0 start-0 m-1 size-6 rounded-full bg-gray-400 ring-[1px] ring-inset ring-white transition-all peer-checked:start-8 peer-checked:w-2 peer-checked:bg-slate-200 peer-checked:ring-transparent"></span>
                 </label>
@@ -56,7 +56,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
-                        <span class="badge badge-sm indicator-item bg-danger">{{itemCount}}</span>
+                        <span class="badge badge-sm indicator-item badge-warning"  *ngIf="itemCount>0">{{itemCount}}</span>
                     </div>
                 </div>
                 <div tabindex="0" class="card card-compact dropdown-content bg-base-100 z-[1] mt-3 w-52 shadow">
@@ -64,7 +64,7 @@
                         <span class="text-lg font-bold">{{itemCount}} Items</span>
                         <span class="text-info">Subtotal: ${{totalPrice | number:'1.2-2'}}</span>
                         <div class="card-actions">
-                            <button class="btn btn-primary btn-block">View cart</button>
+                            <button class="btn btn-primary btn-block" *ngIf="itemCount>0">View cart</button>
                         </div>
                     </div>
                 </div>
@@ -100,7 +100,7 @@
             <i class="bi bi-sun-fill text-slate-700 text-xl"></i>
             <label
                 class="relative inline-block h-8 w-14 cursor-pointer rounded-full bg-white border border-black/50 transition [-webkit-tap-highlight-color:_transparent] has-[:checked]:bg-gray-800/75">
-                <input class="peer sr-only" id="AcceptConditions" type="checkbox" />
+                <input class="peer sr-only" id="themeController" type="checkbox" [(ngModel)]="isDarkMode" (change)="toggleDarkMode()"/>
                 <span
                     class="absolute inset-y-0 start-0 m-1 size-6 rounded-full bg-gray-400 ring-[1px] ring-inset ring-white transition-all peer-checked:start-8 peer-checked:w-2 peer-checked:bg-slate-200 peer-checked:ring-transparent"></span>
             </label>

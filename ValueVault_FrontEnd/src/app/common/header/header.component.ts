@@ -13,10 +13,18 @@ import { CommonModule } from '@angular/common';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  toggleDarkMode() {
+    if (this.isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }
   searchTerm: string = '';
   private cartSubscription!: Subscription;
   itemCount: number = 0;
   totalPrice: number = 0;
+  isDarkMode: boolean = false;
 
   constructor(private router: Router, private cartService: CartService) { }
   @Output() search: EventEmitter<string> = new EventEmitter<string>();
@@ -27,12 +35,8 @@ export class HeaderComponent {
   }
 
   saveSearchTerm(): void {
-    if (this.searchTerm.trim()) {
-      sessionStorage.setItem('searched-term', this.searchTerm);
-      this.search.emit(this.searchTerm);
-    } else {
-      sessionStorage.setItem('searched-term', "");
-    }
+    sessionStorage.setItem('searched-term', this.searchTerm);
+    this.search.emit(this.searchTerm);
   }
 
   navigateToSearch(): void {
