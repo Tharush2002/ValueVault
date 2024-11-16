@@ -2,7 +2,7 @@
   class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 hover:cursor-pointer hover:shadow-xl"
   data-modal-target="product-modal" data-modal-toggle="product-modal" type="button">
   <div class="h-56 w-full">
-    <img class="mx-auto h-full object-contain" src="{{product.thumbnail}}" alt="" />
+    <img class="mx-auto h-full object-contain" src="{{product.product_photo}}" alt="" />
   </div>
   <div class="pt-6">
     <div class="mb-4 flex items-center justify-between gap-4">
@@ -45,15 +45,14 @@
     </div>
 
     <div class="mt-2 flex items-center gap-2">
-      <div class="flex items-center" *ngIf="product.rating">
-
+      <div class="flex items-center" *ngIf="product.product_star_rating">
         <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
           <svg 
             class="h-4 w-4" 
             [ngClass]="{
-              'text-orange-400': i + 1 <= product.rating, 
-              'text-orange-400/50': i < product.rating && i + 1 > product.rating,
-              'text-gray-300': i + 1 > product.rating
+              'text-orange-400': i + 1 <= product.product_star_rating, 
+              'text-orange-400/50': i < product.product_star_rating && i + 1 > product.product_star_rating,
+              'text-gray-300': i + 1 > product.product_star_rating
             }"
             aria-hidden="true" 
             xmlns="http://www.w3.org/2000/svg" 
@@ -66,8 +65,8 @@
         </ng-container>
       </div>
 
-      <p class="text-sm font-medium text-gray-900 dark:text-white"*ngIf="product.rating">{{product.rating}}</p>
-      <p class="text-sm font-medium text-gray-500 dark:text-gray-400" *ngIf="product.total_ratings">({{product.total_ratings}})</p>
+      <p class="text-sm font-medium text-gray-900 dark:text-white"*ngIf="product.product_star_rating">{{product.product_star_rating}}</p>
+      <p class="text-sm font-medium text-gray-500 dark:text-gray-400" *ngIf="product.product_num_ratings">({{product.product_num_ratings}})</p>
     </div>
 
     <ul class="mt-2 flex items-center gap-4">
@@ -91,7 +90,7 @@
     </ul>
 
     <div class="mt-4 flex items-center justify-between gap-4">
-      <p class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">${{getProductPrice()}}</p>
+      <p class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">{{product.product_price}}</p>
     </div>
   </div>
 </div>

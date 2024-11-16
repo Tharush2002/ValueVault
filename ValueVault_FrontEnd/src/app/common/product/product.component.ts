@@ -38,22 +38,8 @@ export class ProductComponent {
   }
 
   getProductName(): string {
-    return this.product.name.split(/[,|]/)[0];
-  }
-
-  getProductPrice(): any {    
-    if (this.product.price) {
-      return this.product.price;
-    }else if(this.product.price_per_unit){
-      return this.product.price_per_unit;
-    }else if(this.product.list_price){
-      return this.product.list_price;
-    }else if(this.product.more_buying_choices.offer_text){
-      const match = this.product.more_buying_choices.offer_text.match(/\d+(\.\d{1,2})?/);
-      return match[0];
-    }else{
-      return 0;
-    }
+    const match = this.product.product_title.match(/^[^(\[|.,]+/);
+    return match ? match[0].trim() : this.product.product_title;
   }
 
   handleAddToCart() {

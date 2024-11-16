@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../services/cart-service/cart.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-product-view',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './product-view.component.html',
   styleUrl: './product-view.component.css'
 })
@@ -17,22 +18,8 @@ export class ProductViewComponent {
   constructor(private cartService: CartService) { }
 
   getProductName(): string {
-    return this.product.name.split(/[,|]/)[0];
-  }
-
-  getProductPrice(): any {    
-    if (this.product.price) {
-      return this.product.price;
-    }else if(this.product.price_per_unit){
-      return this.product.price_per_unit;
-    }else if(this.product.list_price){
-      return this.product.list_price;
-    }else if(this.product.more_buying_choices.offer_text){
-      const match = this.product.more_buying_choices.offer_text.match(/\d+(\.\d{1,2})?/);
-      return match[0];
-    }else{
-      return 0;
-    }
+    const match = this.product.product_title.match(/^[^(\[|.,]+/);
+    return match ? match[0].trim() : this.product.product_title;
   }
 
   quantity: number = 1;

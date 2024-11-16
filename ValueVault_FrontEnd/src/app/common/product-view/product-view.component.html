@@ -2,7 +2,7 @@
     class="flex flex-col p-6 space-y-10 bg-white rounded-2xl shadow-2xl md:flex-row md:space-y-0 md:space-x-10 md:m-0 md:p-16">
     <!-- Image Div -->
     <div>
-        <img [src]="product.thumbnail" alt="" class="mx-auto duration-200 w-60 hover:scale-105" />
+        <img [src]="product.product_photo" alt="" class="mx-auto duration-200 w-60 hover:scale-105" />
     </div>
 
     <!-- Content -->
@@ -11,7 +11,7 @@
         <div class="flex flex-col mb-4 space-y-3 text-center md:text-left">
             <div>
                 <div class="inline-block px-3 py-1 text-sm text-white bg-black rounded-full">
-                    {{product.retailer_badge || "Free Shipping"}}
+                    {{product.sales_volume || "Free Shipping"}}
                 </div>
             </div>
 
@@ -21,8 +21,9 @@
             </div>
             <!-- Price Container -->
             <div class="flex flex-col mb-4 space-y-3 text-center md:text-left">
+                <p class="line-through decoration-red-500 text-red-500" *ngIf="product.product_original_price">{{product.product_original_price}}</p>
                 <div class="flex space-x-12 flex-wrap">
-                    <p class="text-5xl font-bold">${{getProductPrice()}}</p>
+                    <p class="text-5xl font-bold">{{product.product_price}}</p>
                     <div class="flex items-center">
                         <button
                             class="inline-flex items-center justify-center p-1 text-sm font-medium h-6 w-6 text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"

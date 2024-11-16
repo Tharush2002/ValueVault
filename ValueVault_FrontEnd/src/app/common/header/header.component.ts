@@ -51,11 +51,17 @@ export class HeaderComponent {
           this.totalPrice = 0;
           cartItems.forEach(item => {
             this.itemCount += item[1];
-            this.totalPrice += item[0].price * item[1];
+            this.totalPrice += this.getPrice(item[0]) * item[1];
           })
         }
       }
     );
+  }
+
+  getPrice(item:any): number {
+    const priceString = item.product_price;
+    const numberString = priceString.replace(/[^0-9.]/g, '');
+    return numberString ? parseFloat(numberString) : 0; 
   }
 
   ngOnDestroy() {

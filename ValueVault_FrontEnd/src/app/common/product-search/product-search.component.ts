@@ -7,6 +7,9 @@ import { RouterModule } from '@angular/router';
 import { ApiService } from '../../services/api-service/api.service';
 import { initFlowbite } from 'flowbite';
 import { FormsModule } from '@angular/forms';
+import { SortTypes } from '../../modals/enums/SortTypes.enum';
+import { ConditionTypes } from '../../modals/enums/ConditionTypes.enum';
+import { DiscountTypes } from '../../modals/enums/DiscountTypes.enum';
 
 @Component({
   selector: 'app-product-search',
@@ -18,7 +21,8 @@ import { FormsModule } from '@angular/forms';
 })
 export class ProductSearchComponent implements OnInit {
   sliderValue: number = 0;
-
+  pageNumber: number = 1;
+  totalProducts: number = 0;
 
   resetFilters() {
     throw new Error('Method not implemented.');
@@ -46,11 +50,11 @@ export class ProductSearchComponent implements OnInit {
           this.searchTerm = sessionStorage.getItem('searched-term') ?? "";
         }
       }
-      this.loadSearchResults(this.searchTerm);
+      this.loadSearchResults(this.searchTerm, this.pageNumber, SortTypes.Relevance, ConditionTypes.All, DiscountTypes.AllDiscounts);
     }
   }
 
-  async loadSearchResults(searchTerm: any) {
+  async loadSearchResults(searchTerm: any, pageNumber:number, sort: SortTypes, condition: ConditionTypes, discounts: DiscountTypes) {
     this.loading = true;
     if (searchTerm === "" || searchTerm === null) {
       this.productInfo = [];
@@ -61,10 +65,10 @@ export class ProductSearchComponent implements OnInit {
     } else {
       this.isSearchErrorFound = false;
       this.isServerErrorFound = false;
-      this.apiService.fetchSearchResults(searchTerm, 1).subscribe({
-        next: (data) => {
-          console.log(data);
-          this.productInfo = data.results;
+      this.apiService.fetchSearchResults(searchTerm, pageNumber, sort, condition, discounts).subscribe({
+        next: (results) => {
+          console.log(results);
+          this.productInfo = results.data.products;
           this.loading = false;
         },
         error: (error) => {
