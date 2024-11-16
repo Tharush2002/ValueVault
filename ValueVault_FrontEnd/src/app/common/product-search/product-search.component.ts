@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './product-search.component.html',
   styleUrl: './product-search.component.css'
 })
-export class ProductSearchComponent{
+export class ProductSearchComponent implements OnInit {
   sliderValue: number = 0;
 
 
@@ -30,6 +30,8 @@ export class ProductSearchComponent{
   @Input() searchTerm: string = "";
   public productInfo: any[] = [];
   loading: boolean = false;
+  isSearchErrorFound: boolean = false;
+  isServerErrorFound: boolean = false;
 
   ngOnInit(): void {
     initFlowbite();
@@ -39,6 +41,11 @@ export class ProductSearchComponent{
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['searchTerm']) {
+      if (this.searchTerm === "" || this.searchTerm === null) {
+        if (sessionStorage.getItem('searched-term') || sessionStorage.getItem('searched-term') !== "") {
+          this.searchTerm = sessionStorage.getItem('searched-term') ?? "";
+        }
+      }
       this.loadSearchResults(this.searchTerm);
     }
   }
@@ -46,25 +53,26 @@ export class ProductSearchComponent{
   async loadSearchResults(searchTerm: any) {
     this.loading = true;
     if (searchTerm === "" || searchTerm === null) {
-      if (!sessionStorage.getItem('searched-term') || sessionStorage.getItem('searched-term') === "") {
-        sessionStorage.setItem('searched-term', "");
-        this.productInfo = [];
-        this.loading = false;
-        return;
-      }
-      searchTerm = sessionStorage.getItem('searched-term');
+      this.productInfo = [];
+      this.loading = false;
+      this.isServerErrorFound = false
+      this.isSearchErrorFound = true;
+      return;
+    } else {
+      this.isSearchErrorFound = false;
+      this.isServerErrorFound = false;
+      this.apiService.fetchSearchResults(searchTerm, 1).subscribe({
+        next: (data) => {
+          console.log(data);
+          this.productInfo = data.results;
+          this.loading = false;
+        },
+        error: (error) => {
+          console.error("Error fetching data:", error);
+          this.isServerErrorFound = true;
+          this.loading = false;
+        }
+      });
     }
-    // this.apiService.fetchSearchResults(searchTerm, 1).subscribe({
-    //   next: (data) => {
-    //     console.log(data);
-    //     this.productInfo = data.results;
-    //     this.loading = false;
-    //   },
-    //   error: (error) => {
-    //     console.error("Error fetching data:", error);
-    //     this.loading = false;
-    //   }
-    // });
-    // this.loading = false;
   }
 }

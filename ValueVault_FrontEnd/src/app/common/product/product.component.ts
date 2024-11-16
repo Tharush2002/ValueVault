@@ -15,7 +15,7 @@ export class ProductComponent {
 
   constructor() { }
 
-  openProductModal():void {
+  openProductModal(): void {
     if (this.product) {
       this.selectedProduct = this.product;
       setTimeout(() => {
@@ -25,7 +25,7 @@ export class ProductComponent {
         } else {
           console.error("Modal element not found.");
         }
-      }, 0);      
+      }, 0);
     } else {
       console.error("Product is undefined!");
     }
@@ -41,7 +41,22 @@ export class ProductComponent {
     return this.product.name.split(/[,|]/)[0];
   }
 
-  handleAddToCart(){
+  getProductPrice(): any {    
+    if (this.product.price) {
+      return this.product.price;
+    }else if(this.product.price_per_unit){
+      return this.product.price_per_unit;
+    }else if(this.product.list_price){
+      return this.product.list_price;
+    }else if(this.product.more_buying_choices.offer_text){
+      const match = this.product.more_buying_choices.offer_text.match(/\d+(\.\d{1,2})?/);
+      return match[0];
+    }else{
+      return 0;
+    }
+  }
+
+  handleAddToCart() {
     this.closeModal();
   }
 }
