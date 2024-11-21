@@ -35,7 +35,10 @@ export class ProductViewComponent {
   }
 
   addToCart() {
-    this.cartService.addToCart([this.product, this.quantity]);
+    this.cartService.addToCart({
+      product: this.product,
+      quantity: this.quantity
+    });
     this.closeEvent.emit(); 
   }
 }

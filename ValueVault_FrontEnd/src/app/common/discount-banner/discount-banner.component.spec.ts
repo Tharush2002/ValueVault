@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DiscountBanner1Component } from './discount-banner-1.component';
+import { DiscountBanner1Component } from './discount-banner.component';
 
 describe('DiscountBanner1Component', () => {
   let component: DiscountBanner1Component;

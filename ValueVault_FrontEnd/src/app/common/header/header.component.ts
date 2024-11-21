@@ -50,8 +50,8 @@ export class HeaderComponent {
           this.itemCount = 0;
           this.totalPrice = 0;
           cartItems.forEach(item => {
-            this.itemCount += item[1];
-            this.totalPrice += this.getPrice(item[0]) * item[1];
+            this.itemCount += item.quantity;
+            this.totalPrice += this.getPrice(item.product) * item.quantity;
           })
         }
       }

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-discount-banner-1',
+  selector: 'app-discount-banner',
   standalone: true,
   imports: [],
-  templateUrl: './discount-banner-1.component.html',
-  styleUrl: './discount-banner-1.component.css'
+  templateUrl: './discount-banner.component.html',
+  styleUrl: './discount-banner.component.css'
 })
 export class DiscountBanner1Component {
 

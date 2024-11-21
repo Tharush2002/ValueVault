@@ -9,12 +9,12 @@ export class CartService {
   private cartSubject = new BehaviorSubject<any[]>(this.getCartItems());
   cartItems$ = this.cartSubject.asObservable();
 
-  addToCart(product: any) {
+  addToCart(item: any) {
     const currentCart = this.getCartItems();
     for (let index = 0; index < currentCart.length; index++) {
-      const element = currentCart[index][0];
-      if (product[0].asin === element.asin) {
-        currentCart[index][1]+=product[1];
+      const element = currentCart[index].product;
+      if (item.product.asin === element.asin) {
+        currentCart[index].quantity+=item.quantity;
         this.cartSubject.next(currentCart);
         sessionStorage.setItem(this.cartKey, JSON.stringify(currentCart));
         return;
@@ -22,7 +22,7 @@ export class CartService {
         continue;
       }
     }
-    currentCart.push(product);
+    currentCart.push(item);
     this.cartSubject.next(currentCart);
     sessionStorage.setItem(this.cartKey, JSON.stringify(currentCart));
   }
@@ -35,5 +35,15 @@ export class CartService {
   clearCart() {
     sessionStorage.removeItem(this.cartKey);
     this.cartSubject.next([]);
+  }
+
+  saveCart(): void {
+    const currentCartItems = this.cartSubject.getValue();
+    sessionStorage.setItem(this.cartKey, JSON.stringify(currentCartItems));
+  }
+
+  updateCart(newCart: any[]): void {
+    this.cartSubject.next(newCart);
+    sessionStorage.setItem(this.cartKey, JSON.stringify(newCart));
   }
 }
