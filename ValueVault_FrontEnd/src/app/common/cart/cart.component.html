@@ -38,7 +38,7 @@
               <app-cart-item [item]="item" [index]="i" (quantityChanged)="updateQuantity($event)" (itemRemoved)="removeItem($event)"></app-cart-item>
             </div>
             <div class="flex items-start space-x-4">
-              <button type="button" (click)="saveCart()" class="flex items-center justify-center rounded-lg bg-blue-700 px-8 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none dark:bg-blue-600 dark:hover:bg-blue-700 w-auto">Update Cart</button>
+              <button type="button" (click)="saveCart()" class="flex items-center justify-center rounded-lg bg-blue-700 px-8 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none disabled:opacity-30 dark:bg-blue-600 dark:hover:bg-blue-700 w-auto" [disabled]="!isUpdateAvailable">Update Cart</button>
               <button type="button" (click)="resetCart()" *ngIf="isUpdateAvailable" class="flex items-center justify-center rounded-lg bg-slate-200 px-8 py-2.5 text-sm font-medium text-black dark:text-white hover:bg-slate-300 focus:outline-none dark:bg-slate-500 dark:hover:bg-slate-400 w-auto">Reset Cart</button>
             </div>
           </div> 

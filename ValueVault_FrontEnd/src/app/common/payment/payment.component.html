@@ -351,8 +351,8 @@
           <legend class="sr-only">Checkbox variants</legend>
 
           <div class="flex items-center mb-4">
-            <input checked id="checkbox-1" type="checkbox" value=""
-              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600">
+            <input checked id="checkbox-1" type="checkbox" (change)="onCheckboxChange($event)" value=""
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600" [checked]="isConditionsAgreed">
             <label for="checkbox-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree to the <a
               class="text-blue-600 hover:cursor-pointer hover:underline dark:text-blue-500">terms and conditions</a>.</label>
           </div>
@@ -368,7 +368,7 @@
 
         <div class="space-y-3">
           <button type="submit"
-            class="flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Complete Payment</button>
+            class="flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:opacity-30" [disabled]="!isConditionsAgreed">Complete Payment</button>
         </div>
       </div>
     </div>

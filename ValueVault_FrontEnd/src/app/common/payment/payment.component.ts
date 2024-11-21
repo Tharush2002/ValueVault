@@ -2,6 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CartService } from '../../services/cart-service/cart.service';
 import { FormsModule, NgForm } from '@angular/forms';
+import { OrderService } from '../../services/order-service/order.service';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-payment',
@@ -21,10 +24,10 @@ export class PaymentComponent implements OnInit {
   name: string = '';
   paymentType: string = '';
   deliveryType: string = '';
-  Data:any;
-  // paypalEmail: string = '';
+  orderData: any = {};
+  isConditionsAgreed: boolean = false;
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService, private orderService: OrderService, private router: Router,) { }
 
   cartItems: any[] = [];
 
@@ -151,7 +154,7 @@ export class PaymentComponent implements OnInit {
     this.originalPrice = 0;
     this.cartItems.forEach(item => {
       const priceString = item.product.product_original_price;
-      const numberString = priceString ? priceString.replace(/[^0-9.]/g, '') : item[0].product_price.replace(/[^0-9.]/g, '');
+      const numberString = priceString ? priceString.replace(/[^0-9.]/g, '') : item.product.product_price.replace(/[^0-9.]/g, '');
       const unitPrice = parseFloat(numberString) || 0;
       this.originalPrice += parseFloat((unitPrice * item.quantity).toFixed(2));;
     })
@@ -187,44 +190,86 @@ export class PaymentComponent implements OnInit {
     }
   }
 
-  onSubmit(event: Event): void {
+  async onSubmit(event: Event) {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
 
     if (form.checkValidity()) {
-      this.name = (form.querySelector('#your_name') as HTMLInputElement).value;
-      this.email = (form.querySelector('#your_email') as HTMLInputElement).value;
-      this.city = (form.querySelector('#your_city') as HTMLInputElement).value;
-      this.phoneNumberWithoutCountryCode = (form.querySelector('#your_tel') as HTMLInputElement).value;
-      this.addressLine1 = (form.querySelector('#your_address') as HTMLInputElement).value;
-      this.addressLine2 = (form.querySelector('#your_address_secondary') as HTMLInputElement).value;
-      this.stateProvince = (form.querySelector('#your_stateProvince') as HTMLInputElement).value;
-      this.zipCode = (form.querySelector('#your_zip_code') as HTMLInputElement).value;
-      this.landMarks = (form.querySelector('#your_landmarks') as HTMLInputElement).value;
 
-      const phoneNumber = this.countryCode+this.phoneNumberWithoutCountryCode;
-    
-      this.Data = {
-        name: this.name,
-        email: this.email,
-        city: this.city,
-        phoneNumber: phoneNumber,
-        addressLine1: this.addressLine1,
-        addressLine2: this.addressLine2,
-        stateProvince: this.stateProvince,
-        zipCode: this.zipCode,
-        landMarks: this.landMarks,
-        deliveryType: this.deliveryType,
-        paymentType: this.paymentType,
-        originalPrice: this.originalPrice,
-        savings: this.savingsPrice,
-        tax: this.tax,
-        totalPrice: this.totalPrice
-      }
-      console.log('Form submitted successfully!', this.Data);
-    } else {
-      // If the form is not valid, trigger the native validation error messages
-      form.reportValidity();
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success ml-4",
+          cancelButton: "btn btn-danger mr-4"
+        },
+        buttonsStyling: false
+      });
+      swalWithBootstrapButtons.fire({
+        title: "Are you sure you want to confirm the payment?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, Confirm!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.name = (form.querySelector('#your_name') as HTMLInputElement).value;
+          this.email = (form.querySelector('#your_email') as HTMLInputElement).value;
+          this.city = (form.querySelector('#your_city') as HTMLInputElement).value;
+          this.phoneNumberWithoutCountryCode = (form.querySelector('#your_tel') as HTMLInputElement).value;
+          this.addressLine1 = (form.querySelector('#your_address') as HTMLInputElement).value;
+          this.addressLine2 = (form.querySelector('#your_address_secondary') as HTMLInputElement).value;
+          this.stateProvince = (form.querySelector('#your_stateProvince') as HTMLInputElement).value;
+          this.zipCode = (form.querySelector('#your_zip_code') as HTMLInputElement).value;
+          this.landMarks = (form.querySelector('#your_landmarks') as HTMLInputElement).value;
+
+          const phoneNumber = this.countryCode + this.phoneNumberWithoutCountryCode;
+
+          this.orderData = {
+            name: this.name,
+            email: this.email,
+            city: this.city,
+            country: this.country,
+            phoneNumber: phoneNumber,
+            addressLine1: this.addressLine1,
+            addressLine2: this.addressLine2,
+            stateProvince: this.stateProvince,
+            zipCode: this.zipCode,
+            landMarks: this.landMarks,
+            deliveryType: this.deliveryType,
+            paymentType: this.paymentType,
+            originalPrice: this.originalPrice,
+            productPrice: this.productPrice,
+            savings: this.savingsPrice,
+            tax: this.tax,
+            totalPrice: this.totalPrice
+          }
+
+          this.orderService.saveOrderData(this.orderData);
+
+          swalWithBootstrapButtons.fire({
+            title: "Payment Confirmed!",
+            text: "Thank you for your purchase!",
+            icon: "success"
+          }).then(() => {
+            this.router.navigate(['/check-out/summary']);
+          });
+
+        } else if (
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire({
+            title: "Cancelled",
+            text: "Your payment has been cancelled",
+            icon: "error"
+          });
+        }
+      });
     }
+  }
+
+  onCheckboxChange(event: Event): void {
+    const checkbox = event.target as HTMLInputElement;
+    this.isConditionsAgreed = checkbox.checked;
   }
 }
