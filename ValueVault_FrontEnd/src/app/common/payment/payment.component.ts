@@ -5,6 +5,10 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { OrderService } from '../../services/order-service/order.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { UserService } from '../../services/user-service/user.service';
+import { Order } from '../../modals/Order.model';
+import { OrderItemService } from '../../services/order-item-service/order-item.service';
+import { User } from '../../modals/User.model';
 
 @Component({
   selector: 'app-payment',
@@ -27,7 +31,7 @@ export class PaymentComponent implements OnInit {
   orderData: any = {};
   isConditionsAgreed: boolean = false;
 
-  constructor(private cartService: CartService, private orderService: OrderService, private router: Router,) { }
+  constructor(private cartService: CartService, private orderService: OrderService, private router: Router, private userService: UserService, private orderItemService: OrderItemService) { }
 
   cartItems: any[] = [];
 
@@ -46,6 +50,7 @@ export class PaymentComponent implements OnInit {
 
   country: string = '';
   phoneNumberWithoutCountryCode: string = '';
+  user!: User | null;
 
   expiryDate: string = '';
 
@@ -124,7 +129,22 @@ export class PaymentComponent implements OnInit {
     this.calculatePrices();
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    try {
+      this.user = await this.userService.getUserById();
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Server Error..',
+        text: 'An error occurred while retrieving data. Please try again.',
+        showConfirmButton: false,
+        allowEscapeKey: false,
+        timer: 3000,
+      }).then(() => {
+        this.router.navigate(['']);
+      });
+    }
+    // this.userId = this.userService.getCurrentUserId();
     this.calculatePrices();
     this.country = "United States";
     this.countryCode = "+1";
@@ -190,7 +210,7 @@ export class PaymentComponent implements OnInit {
     }
   }
 
-  async onSubmit(event: Event) {
+  onSubmit(event: Event) {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
 
@@ -211,7 +231,7 @@ export class PaymentComponent implements OnInit {
         confirmButtonText: "Yes, Confirm!",
         cancelButtonText: "No, cancel!",
         reverseButtons: true
-      }).then((result) => {
+      }).then(async (result) => {
         if (result.isConfirmed) {
           this.name = (form.querySelector('#your_name') as HTMLInputElement).value;
           this.email = (form.querySelector('#your_email') as HTMLInputElement).value;
@@ -225,27 +245,9 @@ export class PaymentComponent implements OnInit {
 
           const phoneNumber = this.countryCode + this.phoneNumberWithoutCountryCode;
 
-          this.orderData = {
-            name: this.name,
-            email: this.email,
-            city: this.city,
-            country: this.country,
-            phoneNumber: phoneNumber,
-            addressLine1: this.addressLine1,
-            addressLine2: this.addressLine2,
-            stateProvince: this.stateProvince,
-            zipCode: this.zipCode,
-            landMarks: this.landMarks,
-            deliveryType: this.deliveryType,
-            paymentType: this.paymentType,
-            originalPrice: this.originalPrice,
-            productPrice: this.productPrice,
-            savings: this.savingsPrice,
-            tax: this.tax,
-            totalPrice: this.totalPrice
-          }
+          await this.orderService.saveOrderData(new Order(this.user?.id ?? null,this.name,this.email,this.city,this.country,phoneNumber,this.addressLine1,this.addressLine2,this.stateProvince,this.zipCode,this.landMarks,this.deliveryType,this.paymentType,parseFloat(this.productPrice.toFixed(2)),parseFloat(this.tax.toFixed(2)),parseFloat(this.totalPrice.toFixed(2)),this.getTodayDate(),null));
 
-          this.orderService.saveOrderData(this.orderData);
+          await this.orderItemService.saveOrderItems(this.cartItems);
 
           swalWithBootstrapButtons.fire({
             title: "Payment Confirmed!",
@@ -271,5 +273,13 @@ export class PaymentComponent implements OnInit {
   onCheckboxChange(event: Event): void {
     const checkbox = event.target as HTMLInputElement;
     this.isConditionsAgreed = checkbox.checked;
+  }
+
+  getTodayDate(): string {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 }

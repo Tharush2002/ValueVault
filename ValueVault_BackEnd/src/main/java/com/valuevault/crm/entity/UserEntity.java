@@ -11,15 +11,15 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "customer")
-public class CustomerEntity {
+@Table(name = "user")
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Column(nullable = false)
+    private Long id;
+
     private String firstName;
-    @Column(nullable = false)
     private String lastName;
+    @Column(unique = true, nullable = false)
     private String email;
     @Column(unique = true, nullable = false)
     private String userName;

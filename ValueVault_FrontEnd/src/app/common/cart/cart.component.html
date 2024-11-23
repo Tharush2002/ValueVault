@@ -2,30 +2,11 @@
     <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
       <div class="space-y-6 sm:space-y-8 mb-8">
         <ol class="flex flex-col gap-4 rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800 sm:justify-center md:flex-row md:items-center lg:gap-6">
-          <li class="flex justify-center items-center gap-2 md:flex-1 md:flex-col md:gap-1.5 lg:flex-none">
-            <svg class="h-5 w-5 text-blue-700 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
-            </svg>
-            <p class="text-sm font-bold leading-tight text-blue-700 dark:text-blue-500">Shopping Cart</p>
-          </li>
-
-          <div class="hidden h-px w-8 shrink-0 bg-gray-200 dark:bg-gray-700 md:block xl:w-16"></div>
-
-          <li class="flex justify-center items-center gap-2 md:flex-1 md:flex-col md:gap-1.5 lg:flex-none">
-            <svg class="h-5 w-5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
-            </svg>
-            <p class="text-sm font-medium leading-tight text-gray-500 dark:text-gray-400">Payment Validation</p>
-          </li>
-
-          <div class="hidden h-px w-8 shrink-0 bg-gray-200 dark:bg-gray-700 md:block xl:w-16"></div>
-
-          <li class="flex justify-center items-center gap-2 md:flex-1 md:flex-col md:gap-1.5 lg:flex-none">
-            <svg class="h-5 w-5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
-            </svg>
-            <p class="text-sm font-medium leading-tight text-gray-500 dark:text-gray-400">Order Summary</p>
-          </li>
+          <ul class="steps steps-vertical md:steps-horizontal mx-auto">
+            <li class="step step-primary dark:text-white text-blue-700 text-lg mx-8 font-bold">Shopping Cart</li>
+            <li class="step text-gray-600 dark:text-gray-400 text-sm">Payment Validation</li>
+            <li class="step text-gray-600 dark:text-gray-400 text-sm">Order Summary</li>
+          </ul>
         </ol>
       </div>
 
@@ -74,7 +55,9 @@
               </dl>
             </div>
 
-            <button routerLink="/check-out/payment" class="flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700">Proceed to Checkout</button>
+            <button *ngIf="isUserSigned" routerLink="/check-out/payment" class="flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700">Proceed to Checkout</button>
+
+            <button *ngIf="!isUserSigned" routerLink="/log-in" class="flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700">Log In or Sign Up to Continue</button>
   
             <div class="flex items-center justify-center gap-2">
               <span class="text-sm font-normal text-gray-500 dark:text-gray-400"> or </span>

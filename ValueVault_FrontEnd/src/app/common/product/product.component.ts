@@ -38,7 +38,7 @@ export class ProductComponent {
   }
 
   getProductName(): string {
-    const match = this.product.product_title.match(/^[^(\[|.,]+/);
+    const match = this.product.product_title.match(/^[^[\(.|,&]+/);
     return match ? match[0].trim() : this.product.product_title;
   }
 

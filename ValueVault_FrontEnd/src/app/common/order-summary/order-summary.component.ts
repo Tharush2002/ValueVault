@@ -34,7 +34,7 @@ export class OrderSummaryComponent implements OnInit {
   }
 
   getProductName(item: any): string {
-    const match = item.product.product_title.match(/^[^(\[|.,]+/);
+    const match = item.product.product_title.match(/^[^[\(.|,&]+/);
     return match ? match[0].trim() : item.product.product_title;
   }
 
@@ -48,6 +48,7 @@ export class OrderSummaryComponent implements OnInit {
   clear(): void {
     this.cartService.clearCart();
     this.orderService.clearOrderData();
-    this.router.navigate(['']);
+    this.router.navigate([""]);
+    
   }
 }

@@ -15,7 +15,7 @@ export class CartItemComponent implements OnInit {
   }
 
   getProductName(): string {
-    const match = this.item.product.product_title.match(/^[^(\[|.,]+/);
+    const match = this.item.product.product_title.match(/^[^[\(.|,&]+/);
     return match ? match[0].trim() : this.item.product.product_title;
   }
   

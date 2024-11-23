@@ -4,6 +4,7 @@ import { CartService } from '../../services/cart-service/cart.service';
 import { CommonModule } from '@angular/common';
 import { CartItemComponent } from "../cart-item/cart-item.component";
 import { RouterModule } from '@angular/router';
+import { UserService } from '../../services/user-service/user.service';
 
 @Component({
   selector: 'app-cart',
@@ -21,10 +22,19 @@ export class CartComponent implements OnInit {
   totalPrice: number = 0;
   tax: number = 0;
   isUpdateAvailable: boolean = false;
+  isUserSigned: boolean = false;
+  
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService, private userService: UserService) { }
 
   ngOnInit(): void {
+    this.userService.userId$.subscribe((id: number | null) => {
+      if (id !== null) {        
+        this.isUserSigned = true;
+      } else {
+        this.isUserSigned = false;
+      }      
+    });
     this.cartService.cartItems$.subscribe((cartItems) => {
       this.cartItems = JSON.parse(JSON.stringify(cartItems));
     });
