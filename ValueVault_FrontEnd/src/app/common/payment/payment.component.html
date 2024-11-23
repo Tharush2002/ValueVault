@@ -1,38 +1,12 @@
 <section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-12">
   <form (submit)="onSubmit($event)" class="mx-auto max-w-screen-xl px-4 2xl:px-0">
     <div class="space-y-6 sm:space-y-8 mb-8">
-      <ol
-        class="flex flex-col gap-4 rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800 sm:justify-center md:flex-row md:items-center lg:gap-6">
-        <li class="flex justify-center items-center gap-2 md:flex-1 md:flex-col md:gap-1.5 lg:flex-none">
-          <svg class="h-5 w-5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-            width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
-          </svg>
-          <p class="text-sm font-medium leading-tight text-gray-500 dark:text-gray-400">Shopping Cart</p>
-        </li>
-
-        <div class="hidden h-px w-8 shrink-0 bg-gray-200 dark:bg-gray-700 md:block xl:w-16"></div>
-
-        <li class="flex justify-center items-center gap-2 md:flex-1 md:flex-col md:gap-1.5 lg:flex-none">
-          <svg class="h-5 w-5 text-blue-700 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-            width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
-              d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
-          </svg>
-          <p class="text-sm font-bold leading-tight text-blue-700 dark:text-blue-500">Payment Validation</p>
-        </li>
-
-        <div class="hidden h-px w-8 shrink-0 bg-gray-200 dark:bg-gray-700 md:block xl:w-16"></div>
-
-        <li class="flex justify-center items-center gap-2 md:flex-1 md:flex-col md:gap-1.5 lg:flex-none">
-          <svg class="h-5 w-5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-            width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
-          </svg>
-          <p class="text-sm font-medium leading-tight text-gray-500 dark:text-gray-400">Order Summary</p>
-        </li>
+      <ol class="flex flex-col gap-4 rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800 sm:justify-center md:flex-row md:items-center lg:gap-6">
+        <ul class="steps steps-vertical md:steps-horizontal mx-auto">
+          <li class="step step-primary text-gray-600 mx-12 dark:text-gray-400 text-sm">Shopping Cart</li>
+          <li class="step step-primary dark:text-white text-lg text-blue-600 font-bold">Payment Validation</li>
+          <li class="step text-gray-600 dark:text-gray-400 text-sm">Order Summary</li>
+        </ul>
       </ol>
     </div>
     
@@ -47,7 +21,7 @@
               </label>
               <input type="text" id="your_name"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                placeholder="John Doe" required #nameInput/>
+                placeholder="John Doe" required [value]="(user?.firstName ?? '') +' '+ (user?.lastName ?? '')" #nameInput/>
             </div>
 
             <div class="col-span-2 sm:col-span-1">
@@ -55,7 +29,7 @@
               </label>
               <input type="email" id="your_email"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                placeholder="johnd123@gmail.com" required #emailInput/>
+                placeholder="johnd123@gmail.com" [value]="user?.email" required #emailInput/>
             </div>
 
             <div class="col-span-2 sm:col-span-1">
@@ -114,7 +88,7 @@
                   </label>
                   <input type="text" id="your_address"
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                    placeholder="1234 Maple Street, Apt 567, Springfield, IL 62701, USA" required #address1Input/>
+                    placeholder="1234 Maple Street, Apt 567, Springfield, IL 62701, USA" [value]="user?.address ?? ''" required #address1Input/>
                 </div>
                 <div class="col-span-2">
                   <label for="your_address_secondary" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Address
